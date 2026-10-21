@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Large data and telemetry (keep out of git)
+data/
+datasets/
+*.evtx
+*.pcap
+*.gz
+
+# Secrets
+.env
+.env.*
+
+# macOS and editor
+.DS_Store
+.vscode/
+.idea/
