@@ -1,0 +1,27 @@
+title: AWS IAM User Created
+id: 1d1864fd-5410-4ba8-be0f-b0d86dda486a
+status: experimental
+description: |
+    Detects creation of a new IAM user. Attackers create IAM users as a persistence
+    foothold. Alert when the creating identity is not an approved administrator or the
+    call comes from an unexpected source IP.
+references:
+    - https://github.com/reynaldusjasona/soc-detection-lab/blob/main/investigations/01-aws-account-compromise.md
+author: Jason Reynaldus (reynaldusjasona)
+date: 2026-11-11
+logsource:
+    product: aws
+    service: cloudtrail
+detection:
+    selection:
+        eventSource: iam.amazonaws.com
+        eventName: CreateUser
+    condition: selection
+falsepositives:
+    - Legitimate onboarding or provisioning by administrators. Baseline normal IAM admins.
+level: medium
+tags:
+    - attack.persistence
+    - attack.t1136.003
+# Validated against BOTS v3: matches web_admin's CreateUser attempt (target my_db_user)
+# at 2018-08-20 09:16:12 (AccessDenied).

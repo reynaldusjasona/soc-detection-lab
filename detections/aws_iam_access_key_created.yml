@@ -1,0 +1,27 @@
+title: AWS IAM Access Key Created
+id: fb9d4156-a0f2-46b6-b27e-8237a56716e7
+status: experimental
+description: |
+    Detects creation of a new IAM access key. After compromising an identity, attackers
+    mint an access key to keep programmatic access (persistence). Review the calling
+    identity, the target user, and the source IP.
+references:
+    - https://github.com/reynaldusjasona/soc-detection-lab/blob/main/investigations/01-aws-account-compromise.md
+author: Jason Reynaldus (reynaldusjasona)
+date: 2026-11-11
+logsource:
+    product: aws
+    service: cloudtrail
+detection:
+    selection:
+        eventSource: iam.amazonaws.com
+        eventName: CreateAccessKey
+    condition: selection
+falsepositives:
+    - Routine key rotation by administrators or CI/CD systems. Baseline who normally creates keys.
+level: medium
+tags:
+    - attack.persistence
+    - attack.t1098.001
+# Validated against BOTS v3: matches web_admin's CreateAccessKey attempt at 2018-08-20 09:16:12
+# (AccessDenied, so a failed persistence attempt the SOC still wants to see).

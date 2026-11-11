@@ -1,0 +1,33 @@
+title: AWS S3 Bucket Made Public via ACL
+id: 378515cf-da97-4dec-a7c2-82b21ce3b761
+status: experimental
+description: |
+    Detects a PutBucketAcl or PutBucketPolicy call that grants permissions to the
+    AllUsers or AuthenticatedUsers group, which makes an S3 bucket publicly accessible.
+    Fires on both successful and attempted (AccessDenied) calls.
+references:
+    - https://github.com/reynaldusjasona/soc-detection-lab/blob/main/investigations/01-aws-account-compromise.md
+author: Jason Reynaldus (reynaldusjasona)
+date: 2026-11-11
+logsource:
+    product: aws
+    service: cloudtrail
+detection:
+    selection:
+        eventSource: s3.amazonaws.com
+        eventName:
+            - PutBucketAcl
+            - PutBucketPolicy
+    grantee:
+        requestParameters.AccessControlPolicy.AccessControlList.Grant.Grantee.URI|contains:
+            - 'http://acs.amazonaws.com/groups/global/AllUsers'
+            - 'http://acs.amazonaws.com/groups/global/AuthenticatedUsers'
+    condition: selection and grantee
+falsepositives:
+    - Buckets intentionally made public (static website hosting, public datasets). Confirm with the owner.
+level: high
+tags:
+    - attack.collection
+    - attack.t1530
+# Validated against BOTS v3: catches the frothlywebcode exposure at 2018-08-20 13:01:46 (AllUsers grant)
+# and does NOT fire on the 13:57:54 call that removed the AllUsers grant.
