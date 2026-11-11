@@ -1,0 +1,17 @@
+services:
+  splunk:
+    image: splunk/splunk:9.4.3
+    platform: linux/amd64   # Apple Silicon runs the amd64 image under emulation
+    container_name: splunk
+    environment:
+      - SPLUNK_START_ARGS=--accept-license
+      - SPLUNK_PASSWORD=Changeme123!
+    ports:
+      - "8000:8000"
+    volumes:
+      - splunk-var:/opt/splunk/var
+      - splunk-etc:/opt/splunk/etc
+
+volumes:
+  splunk-var:
+  splunk-etc:
