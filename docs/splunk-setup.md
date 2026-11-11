@@ -9,7 +9,7 @@ Local Splunk instance for working the BOTS v3 investigation dataset. Runs in Doc
 
 ## Steps
 
-1. Download the dataset (about 320 MB) into `datasets/`:
+1. Download and extract the dataset (about 320 MB) into `datasets/`:
 
    ```bash
    mkdir -p datasets && cd datasets
@@ -21,28 +21,47 @@ Local Splunk instance for working the BOTS v3 investigation dataset. Runs in Doc
 
    This extracts to `datasets/botsv3_data_set/`. The `datasets/` folder is gitignored.
 
-2. Start Splunk clean (the compose file uses named volumes, no bind mount, so provisioning does not fail on read-only files):
+2. Start Splunk. The compose file uses named volumes, no bind mount, so boot does not fail on the dataset's read-only files:
 
    ```bash
    docker compose up -d
    docker compose logs -f   # wait for "Ansible playbook complete", then Ctrl+C
    ```
 
-3. Copy the dataset app into Splunk. The folder name must be `botsv3_data_set`, because the dataset's `indexes.conf` hardcodes that path (`$SPLUNK_HOME/etc/apps/botsv3_data_set/...`). A different name means Splunk cannot find the index data.
+3. Copy the dataset app into the container. The folder name must be `botsv3_data_set`, because the dataset's `indexes.conf` hardcodes that path (`$SPLUNK_HOME/etc/apps/botsv3_data_set/...`):
 
    ```bash
    docker cp ./datasets/botsv3_data_set splunk:/opt/splunk/etc/apps/botsv3_data_set
-   docker exec -u root splunk chown -R splunk:splunk /opt/splunk/etc/apps/botsv3_data_set
+   ```
+
+4. Fix ownership. This is the step that actually makes the data load. `docker cp` writes the files as root with `0700` permissions, so the Splunk process (uid `41812`) cannot read the index config or the buckets, and every search returns 0 events. Chown the app to the Splunk uid, then restart:
+
+   ```bash
+   docker exec -u root splunk chown -R 41812:41812 /opt/splunk/etc/apps/botsv3_data_set
    docker restart splunk
    ```
 
-4. Wait 1 to 2 minutes for the restart, then open http://localhost:8000 (login `admin` / `Changeme123!`), go to Search & Reporting, set the time range to **All time**, and run:
+5. Wait 1 to 2 minutes for the restart. Verify the index config loaded. Run btool as the Splunk uid, not the default exec user, or it cannot write its own log and fails:
+
+   ```bash
+   docker exec -u 41812 splunk /opt/splunk/bin/splunk btool indexes list botsv3
+   ```
+
+   A `[botsv3]` stanza means the config is loaded.
+
+6. Open http://localhost:8000 (login `admin` / `Changeme123!`), go to Search & Reporting, set the time range to **All time**, and run:
 
    ```
    index=botsv3 | stats count by sourcetype
    ```
 
-   A table of sourcetypes with counts means the data loaded.
+   About 107 sourcetypes totalling ~1.9M events means the data loaded.
+
+## Troubleshooting
+
+- **Search returns 0 events but the index exists.** Almost always ownership. Run `docker exec -u 41812 splunk ls /opt/splunk/etc/apps/botsv3_data_set/var/lib/splunk/botsv3/db`. If it says "Permission denied", redo step 4.
+- **`btool` prints "Permission denied" creating `/opt/splunk/var/log/...`.** It ran as the wrong user. Add `-u 41812`.
+- **Two `botsv3*` apps exist** (e.g. a leftover `botsv3` from an earlier wrong-named copy). Remove the wrong one inside the container, then restart: `docker exec -u root splunk rm -rf /opt/splunk/etc/apps/botsv3`. A stale app with a broken `props.conf` also shows up as parse warnings in `splunkd.log`.
 
 ## Notes
 
