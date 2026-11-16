@@ -1,0 +1,30 @@
+title: Fodhelper UAC Bypass
+id: cfb584a2-efd2-4aff-93b9-90e84fc02061
+status: experimental
+description: |
+    Detects fodhelper.exe spawning a command interpreter. fodhelper is an auto-elevating
+    Windows binary abused to run commands at high integrity without a UAC prompt.
+references:
+    - https://github.com/reynaldusjasona/soc-detection-lab/blob/main/investigations/02-fyodor-struts-compromise.md
+author: Jason Reynaldus (reynaldusjasona)
+date: 2026-11-16
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        ParentImage|endswith: '\fodhelper.exe'
+        Image|endswith:
+            - '\powershell.exe'
+            - '\cmd.exe'
+            - '\pwsh.exe'
+    condition: selection
+falsepositives:
+    - Very rare. fodhelper normally opens the Optional Features settings page, not a shell.
+level: high
+tags:
+    - attack.privilege_escalation
+    - attack.defense_evasion
+    - attack.t1548.002
+# Validated against BOTS v3: fodhelper.exe is the parent of a hidden PowerShell on FYODOR-L
+# (2018-08-20), the Empire UAC-bypass module.

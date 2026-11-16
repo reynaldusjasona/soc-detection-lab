@@ -68,3 +68,27 @@ Local Splunk instance for working the BOTS v3 investigation dataset. Runs in Doc
 - Set the time picker to All time. BOTS v3 data is from 2018, so any recent-time range returns nothing.
 - The dataset was built on Splunk 7.1.7. Version 9.4.3 reads it.
 - Stop with `docker compose down`. Named volumes keep Splunk config and the imported app across restarts.
+
+
+## Endpoint field extraction (Sysmon)
+
+The AWS CloudTrail work needs no add-on because CloudTrail is JSON and Splunk extracts it
+automatically. The Sysmon endpoint data is XML and needs field extraction.
+
+1. Install the **Splunk Add-on for Sysmon** (Splunkbase app 5709) through
+   **Apps > Manage Apps > Install app from file**, then restart. The add-on renames the
+   dataset's Sysmon sourcetype to the canonical `XmlWinEventLog`.
+
+2. The add-on does not extract fields for the dataset here, because BOTS v3 indexes Sysmon
+   under a lowercase sourcetype and `props.conf` stanza matching is case-sensitive. Install
+   the local app `splunk/TA-botsv3-sysmon-extract` (also via Install app from file), then
+   restart. It binds to `XmlWinEventLog` and pulls Sysmon fields (`Image`, `CommandLine`,
+   `ParentImage`, `DestinationIp`, `EventCode`, and the rest) straight from the raw XML.
+
+3. Verify:
+
+   ```
+   index=botsv3 sourcetype=XmlWinEventLog EventCode=1 | stats count by Image | sort - count
+   ```
+
+   A list of process image paths means the extractions are working.

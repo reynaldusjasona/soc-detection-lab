@@ -1,0 +1,28 @@
+title: Process Execution From Windows Temp Directory
+id: aeb2a288-eefa-47ec-a9ea-d908062719f9
+status: experimental
+description: |
+    Detects a process whose image runs from a Windows Temp path. Attackers drop and run
+    tooling from Temp because it is world-writable and often ignored. Review the image, the
+    parent, and the command line.
+references:
+    - https://github.com/reynaldusjasona/soc-detection-lab/blob/main/investigations/02-fyodor-struts-compromise.md
+author: Jason Reynaldus (reynaldusjasona)
+date: 2026-11-16
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|contains:
+            - '\Windows\Temp\'
+            - '\AppData\Local\Temp\'
+    condition: selection
+falsepositives:
+    - Installers and updaters that stage executables in Temp. Baseline the expected installers.
+level: medium
+tags:
+    - attack.execution
+    - attack.t1059
+# Validated against BOTS v3: fires on iexeplorer.exe (Struts2 exploit client) and hdoor.exe
+# (internal port scanner) run from C:\Windows\Temp\ on FYODOR-L (2018-08-20).

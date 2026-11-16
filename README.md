@@ -10,11 +10,11 @@ Target role: SOC analyst, working toward detection engineer.
 
 Started October 2026.
 
-- Investigation 1 (AWS account compromise, BOTS v3) written up, answers checked against the official key.
-- 3 Sigma rules derived from it, validated against the BOTS v3 data.
+- Two BOTS v3 investigations: AWS account compromise (cloud) and the FYODOR-L Struts2 compromise (endpoint, Sysmon).
+- 6 Sigma rules derived from them, validated against the BOTS v3 data.
 - Detection-as-code pipeline live: pySigma validation and the ATT&CK coverage map run in CI on every push.
 
-Next: more BOTS v3 investigations (host and endpoint side), then the home lab.
+Next: more investigations, then the home lab.
 
 ## Structure
 
@@ -22,6 +22,7 @@ Next: more BOTS v3 investigations (host and endpoint side), then the home lab.
 - `detections/` — Sigma detection rules
 - `coverage/` — MITRE ATT&CK coverage map (Navigator layer, generated)
 - `tools/` — rule validation and layer generation scripts
+- `splunk/` — local Splunk app for Sysmon field extraction
 - `docs/` — lab setup and architecture notes
 
 ## Validation
@@ -36,7 +37,7 @@ Both run in CI (`.github/workflows/ci.yml`). CI also fails if the committed cove
 
 ## Roadmap
 
-1. Investigation writeups from BOTS v3, answers checked against the official key. *(1 of several done)*
+1. Investigation writeups from BOTS v3, answers checked against the official key. *(2 done: cloud and endpoint)*
 2. Home lab: Active Directory, Sysmon, logs shipped into a SIEM
 3. Sigma rules, validated with Atomic Red Team and a normal-activity baseline
 4. ATT&CK coverage map and a detection-as-code CI pipeline. *(done)*

@@ -19,3 +19,6 @@ datasets/
 .DS_Store
 .vscode/
 .idea/
+
+# Packaged Splunk app (build artifact; source is tracked under splunk/)
+splunk/*.tgz

@@ -1,0 +1,3 @@
+# Export globally so the extractions apply when searching from the Search app.
+[]
+export = system

@@ -13,3 +13,6 @@ Work the BOTS questions in Splunk, document the SPL queries used and the reasoni
 ## Files
 
 One Markdown writeup per investigation. Each covers: scenario, questions answered, queries used, findings, and which answers matched the key.
+
+- `01-aws-account-compromise.md` - cloud side: AWS CloudTrail, IAM persistence, public S3 bucket.
+- `02-fyodor-struts-compromise.md` - endpoint side: Empire implant on FYODOR-L, Struts2 attack on an internal server, C2 and internal scanning.

@@ -11,6 +11,26 @@
   "hideDisabled": false,
   "techniques": [
     {
+      "techniqueID": "T1059",
+      "score": 1,
+      "color": "",
+      "comment": "win_exec_from_windows_temp.yml (Process Execution From Windows Temp Directory)",
+      "enabled": true,
+      "metadata": [],
+      "showSubtechniques": false,
+      "tactic": "execution"
+    },
+    {
+      "techniqueID": "T1059.001",
+      "score": 1,
+      "color": "",
+      "comment": "win_powershell_encoded_hidden.yml (PowerShell Encoded Command With Hidden Window)",
+      "enabled": true,
+      "metadata": [],
+      "showSubtechniques": true,
+      "tactic": "execution"
+    },
+    {
       "techniqueID": "T1098.001",
       "score": 1,
       "color": "",
@@ -39,6 +59,16 @@
       "metadata": [],
       "showSubtechniques": false,
       "tactic": "collection"
+    },
+    {
+      "techniqueID": "T1548.002",
+      "score": 1,
+      "color": "",
+      "comment": "win_fodhelper_uac_bypass.yml (Fodhelper UAC Bypass)",
+      "enabled": true,
+      "metadata": [],
+      "showSubtechniques": true,
+      "tactic": "privilege-escalation"
     }
   ],
   "gradient": {

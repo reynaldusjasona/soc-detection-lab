@@ -1,0 +1,36 @@
+title: PowerShell Encoded Command With Hidden Window
+id: 6df24726-159a-4e66-a3a5-48978ccef99c
+status: experimental
+description: |
+    Detects PowerShell launched with an encoded command together with flags that hide the
+    window and skip the profile. This combination is typical of staged implants such as
+    PowerShell Empire, not of day-to-day administration.
+references:
+    - https://github.com/reynaldusjasona/soc-detection-lab/blob/main/investigations/02-fyodor-struts-compromise.md
+author: Jason Reynaldus (reynaldusjasona)
+date: 2026-11-16
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection_img:
+        Image|endswith: '\powershell.exe'
+    selection_enc:
+        CommandLine|contains:
+            - '-enc'
+            - '-EncodedCommand'
+    selection_flags:
+        CommandLine|contains:
+            - '-W Hidden'
+            - '-WindowStyle Hidden'
+            - '-NonI'
+            - '-NoP'
+    condition: all of selection_*
+falsepositives:
+    - Rare automation that base64-encodes commands. Baseline which accounts run encoded PowerShell.
+level: high
+tags:
+    - attack.execution
+    - attack.t1059.001
+# Validated against BOTS v3: fires on the Empire stagers on FYODOR-L (2018-08-20), e.g.
+# powershell -NoP -NonI -W Hidden -enc <base64>. Does not fire on plain interactive PowerShell.
