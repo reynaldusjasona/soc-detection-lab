@@ -16,3 +16,4 @@ One Markdown writeup per investigation. Each covers: scenario, questions answere
 
 - `01-aws-account-compromise.md` - cloud side: AWS CloudTrail, IAM persistence, public S3 bucket.
 - `02-fyodor-struts-compromise.md` - endpoint side: Empire implant on FYODOR-L, Struts2 attack on an internal server, C2 and internal scanning.
+- `03-campaign-correlation.md` - correlation: the implant across BSTOLL-L, ABUNGST-L and FYODOR-L, and the link to the cloud intrusion through the bstoll identity.
