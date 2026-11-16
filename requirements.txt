@@ -1,0 +1,4 @@
+# Detection-as-code tooling. Used by tools/validate_rules.py and the CI pipeline.
+pysigma>=0.11.0
+pysigma-backend-splunk>=1.1.0
+pyyaml>=6.0

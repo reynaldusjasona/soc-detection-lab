@@ -12,8 +12,10 @@ validated against the same data before being kept.
    data. It must catch the real incident event(s) it was written for.
 3. **Precision.** The same search must not fire on the benign look-alike activity in the
    dataset (for example, an ACL change that *removes* a public grant).
-4. **Compilation.** Rules are checked with `pySigma` so they parse and convert cleanly.
-   This runs in CI once the pipeline is added.
+4. **Compilation.** Rules are checked with `pySigma` so they parse and convert cleanly
+   to SPL. This runs in CI on every push and pull request
+   (`.github/workflows/ci.yml`), together with structural checks in
+   `tools/validate_rules.py`.
 
 A baseline of normal activity and Atomic Red Team coverage comes later, with the home lab.
 

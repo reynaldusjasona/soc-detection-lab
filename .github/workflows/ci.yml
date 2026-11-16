@@ -1,0 +1,32 @@
+name: validate-detections
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Validate Sigma rules (structure + SPL conversion)
+        run: python tools/validate_rules.py
+
+      - name: Check ATT&CK Navigator layer is up to date
+        run: |
+          python tools/generate_navigator_layer.py
+          if ! git diff --exit-code coverage/attack-navigator-layer.json; then
+            echo "::error::coverage/attack-navigator-layer.json is stale. Run 'python tools/generate_navigator_layer.py' and commit the result."
+            exit 1
+          fi
