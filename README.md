@@ -43,6 +43,8 @@ python tools/generate_navigator_layer.py # rebuild coverage/attack-navigator-lay
 
 Both run in CI (`.github/workflows/ci.yml`). CI also fails if the committed coverage layer is out of date.
 
+Triage and response steps for each detection are in `docs/runbook.md`.
+
 ## Roadmap
 
 1. Investigation writeups from BOTS v3, answers checked against the official key. *(3 done, correlated into one intrusion)*
