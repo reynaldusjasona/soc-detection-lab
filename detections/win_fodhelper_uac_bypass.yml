@@ -26,5 +26,5 @@ tags:
     - attack.privilege_escalation
     - attack.defense_evasion
     - attack.t1548.002
-# Validated against BOTS v3: fodhelper.exe is the parent of a hidden PowerShell on FYODOR-L
-# (2018-08-20), the Empire UAC-bypass module.
+# Validated against BOTS v3: 2 true positives on FYODOR-L (2018-08-20 10:07:06 and 11:32:12),
+# fodhelper.exe spawning hidden PowerShell that reads the implant from a fake registry value.

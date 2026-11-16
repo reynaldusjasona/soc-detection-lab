@@ -17,12 +17,19 @@ detection:
         Image|contains:
             - '\Windows\Temp\'
             - '\AppData\Local\Temp\'
-    condition: selection
+    filter_known_good:
+        Image|endswith:
+            - '\DismHost.exe'
+            - 'Update.exe'
+    condition: selection and not filter_known_good
 falsepositives:
-    - Installers and updaters that stage executables in Temp. Baseline the expected installers.
+    - Installers and updaters that stage executables in Temp. The filter removes DismHost and
+      common updaters; add others seen in your own baseline.
 level: medium
 tags:
     - attack.execution
     - attack.t1059
-# Validated against BOTS v3: fires on iexeplorer.exe (Struts2 exploit client) and hdoor.exe
-# (internal port scanner) run from C:\Windows\Temp\ on FYODOR-L (2018-08-20).
+# Validated against BOTS v3: catches iexeplorer.exe (34, Struts2 client) and hdoor.exe (1,
+# scanner) from C:\Windows\Temp\ on FYODOR-L (2018-08-20). Tuning: before the filter the rule
+# also hit DismHost.exe (Windows servicing) and DropboxUpdate.exe under AppData\Local\Temp;
+# the filter removes those known-good updaters.

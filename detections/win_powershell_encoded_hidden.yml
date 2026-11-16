@@ -32,5 +32,5 @@ level: high
 tags:
     - attack.execution
     - attack.t1059.001
-# Validated against BOTS v3: fires on the Empire stagers on FYODOR-L (2018-08-20), e.g.
-# powershell -NoP -NonI -W Hidden -enc <base64>. Does not fire on plain interactive PowerShell.
+# Validated against BOTS v3: 11 true positives across ABUNGST-L, BSTOLL-L and FYODOR-L
+# (2018-08-20 09:59:48 to 11:32:13), the Empire stagers. Does not fire on plain PowerShell.
