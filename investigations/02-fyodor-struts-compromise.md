@@ -1,4 +1,4 @@
-# Investigation 2 — Endpoint compromise and Struts2 attack from FYODOR-L
+# Investigation 2 - Endpoint compromise and Struts2 attack from FYODOR-L
 
 Dataset: Splunk BOTS v3. Endpoint telemetry is Sysmon (`sourcetype=XmlWinEventLog` after
 the Splunk Add-on for Sysmon renames it), with network connections in Sysmon EventCode 3.

@@ -17,15 +17,16 @@ validated against the same data before being kept.
    (`.github/workflows/ci.yml`), together with structural checks in
    `tools/validate_rules.py`.
 
-A baseline of normal activity and Atomic Red Team coverage comes later, with the home lab.
+The rules are not yet tested against a baseline of normal activity or an independent attack
+run (for example Atomic Red Team). That is listed as future work in the main README.
 
 ## Rules
 
 | Rule | Tactic | ATT&CK | Source investigation |
 |---|---|---|---|
-| `aws_s3_bucket_made_public.yml` | Collection | T1530 | 01 — AWS account compromise |
-| `aws_iam_access_key_created.yml` | Persistence | T1098.001 | 01 — AWS account compromise |
-| `aws_iam_user_created.yml` | Persistence | T1136.003 | 01 — AWS account compromise |
+| `aws_s3_bucket_made_public.yml` | Collection | T1530 | 01 - AWS account compromise |
+| `aws_iam_access_key_created.yml` | Persistence | T1098.001 | 01 - AWS account compromise |
+| `aws_iam_user_created.yml` | Persistence | T1136.003 | 01 - AWS account compromise |
 | `win_powershell_encoded_hidden.yml` | Execution | T1059.001 | 02 - FYODOR-L Struts2 compromise |
 | `win_exec_from_windows_temp.yml` | Execution | T1059 | 02 - FYODOR-L Struts2 compromise |
 | `win_fodhelper_uac_bypass.yml` | Privilege Escalation | T1548.002 | 02 - FYODOR-L Struts2 compromise |

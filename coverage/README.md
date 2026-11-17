@@ -23,6 +23,9 @@ Each covered technique is scored by how many rules detect it.
 | Account Manipulation: Additional Cloud Credentials | T1098.001 | Persistence | 1 |
 | Create Account: Cloud Account | T1136.003 | Persistence | 1 |
 | Data from Cloud Storage | T1530 | Collection | 1 |
+| Command and Scripting Interpreter | T1059 | Execution | 1 |
+| Command and Scripting Interpreter: PowerShell | T1059.001 | Execution | 1 |
+| Abuse Elevation Control Mechanism: Bypass User Account Control | T1548.002 | Privilege Escalation | 1 |
 
-All three come from investigation 01 (AWS account compromise). Coverage grows as more
-investigations and rules are added.
+The first three come from investigation 01 (AWS account compromise), the last three from
+investigation 02 (FYODOR-L Struts2 compromise).

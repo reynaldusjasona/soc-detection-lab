@@ -1,4 +1,4 @@
-# Investigation 3 — One campaign across three laptops, and the link to the cloud
+# Investigation 3 - One campaign across three laptops, and the link to the cloud
 
 Dataset: Splunk BOTS v3. This writeup does not open a new data source. It correlates the
 endpoint findings from investigation 2 across hosts, and ties the endpoint intrusion to the
