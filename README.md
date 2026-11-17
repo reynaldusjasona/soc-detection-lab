@@ -31,10 +31,10 @@ Each rule was converted to SPL and run against BOTS v3 (1.9 million events). Cou
 | Rule | ATT&CK | Level | Matches in BOTS v3 | Notes |
 |---|---|---|---|---|
 | [aws_s3_bucket_made_public](detections/aws_s3_bucket_made_public.yml) | T1530 | high | 1 | The `frothlywebcode` exposure. Does not fire on the later call that removed the public grant. |
-| [aws_iam_access_key_created](detections/aws_iam_access_key_created.yml) | T1098.001 | medium | 1 | `web_admin` CreateAccessKey attempt (denied). |
-| [aws_iam_user_created](detections/aws_iam_user_created.yml) | T1136.003 | medium | 1 | `web_admin` CreateUser attempt (denied). |
+| [aws_iam_access_key_created](detections/aws_iam_access_key_created.yml) | T1098.001 | medium | 1 | `web_admin` CreateAccessKey attempt (denied). No other matches in the dataset. |
+| [aws_iam_user_created](detections/aws_iam_user_created.yml) | T1136.003 | medium | 1 | `web_admin` CreateUser attempt (denied). No other matches in the dataset. |
 | [win_powershell_encoded_hidden](detections/win_powershell_encoded_hidden.yml) | T1059.001 | high | 11 | Empire stagers on three laptops. Does not fire on plain PowerShell. |
-| [win_fodhelper_uac_bypass](detections/win_fodhelper_uac_bypass.yml) | T1548.002 | high | 2 | Both on FYODOR-L. |
+| [win_fodhelper_uac_bypass](detections/win_fodhelper_uac_bypass.yml) | T1548.002 | high | 2 | Both on FYODOR-L, both the implant. No other matches in the dataset. |
 | [win_exec_from_windows_temp](detections/win_exec_from_windows_temp.yml) | T1059 | medium | 35 | 34 `iexeplorer.exe`, 1 `hdoor.exe`. Tuned after it first hit `DismHost.exe` and `DropboxUpdate.exe`. |
 
 The coverage map is in [coverage/](coverage/README.md). Triage and response steps are in [docs/runbook.md](docs/runbook.md).

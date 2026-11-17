@@ -25,3 +25,4 @@ tags:
     - attack.t1136.003
 # Validated against BOTS v3: matches web_admin's CreateUser attempt (target my_db_user)
 # at 2018-08-20 09:16:12 (AccessDenied).
+# Precision (re-run 2026-11-17): 1 match in the whole dataset, the true positive. No other hits.

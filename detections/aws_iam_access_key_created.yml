@@ -25,3 +25,4 @@ tags:
     - attack.t1098.001
 # Validated against BOTS v3: matches web_admin's CreateAccessKey attempt at 2018-08-20 09:16:12
 # (AccessDenied, so a failed persistence attempt the SOC still wants to see).
+# Precision (re-run 2026-11-17): 1 match in the whole dataset, the true positive. No other hits.

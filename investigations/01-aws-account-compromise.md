@@ -65,6 +65,10 @@ index=botsv3 sourcetype=aws:cloudtrail
 
 Finding: four events, all on 2018-08-20. At **09:16:12** `web_admin` attempts `CreateUser`, `CreateAccessKey`, and `DeleteAccessKey` within the same second from `35.153.154.221` (Boto3) - scripted, not console. The raw events show all three **failed** with `errorCode: AccessDenied`: `web_admin` is not authorized for `iam:CreateUser` (target user **`my_db_user`**) or `iam:CreateAccessKey`, and `requestParameters`/`responseElements` are null because the calls were denied. So the attacker, operating as `web_admin`, tried to establish IAM persistence by creating a user `my_db_user` and an access key, but was blocked by insufficient permissions. Twenty minutes later, at **09:36:12**, `bstoll` runs `UpdateAccessKey` on `web_admin` from the console (`157.97.121.132`), changing that key's status. Reading `errorCode` is what separates an attempted technique from a successful one.
 
+The `CreateAccessKey` attempt on its own, as the detection rule sees it:
+
+![CreateAccessKey by web_admin, AccessDenied](../docs/img/iam-create-access-key.png)
+
 ### Q4. Was an S3 bucket exposed publicly, and which one?
 
 ```spl

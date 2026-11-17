@@ -87,6 +87,7 @@ Finding: the PowerShell on FYODOR-L is launched several ways, each a known techn
 - `powershell -noP -sta -w 1 -enc <base64>`: a PowerShell Empire stager
 - `$x=$((gp HKCU:Software\Microsoft\Windows Update).Update); powershell -NoP -NonI -W Hidden -enc $x`: the payload is read from a fake `Windows Update` registry value and run (persistence, T1112 / T1547)
 - parent `fodhelper.exe`: a UAC bypass that runs the implant at high integrity without a prompt (T1548.002)
+  ![fodhelper.exe spawning hidden PowerShell on FYODOR-L](../docs/img/fodhelper-uac-bypass.png)
 - parent `svchost.exe -k netsvcs ... Schedule`: a scheduled task runs PowerShell (T1053.005)
 - parent `wmiprvse.exe`: WMI-based execution (T1047)
 - parent `browser_broker.exe -Embedding`: a browser context, consistent with initial access through the browser
