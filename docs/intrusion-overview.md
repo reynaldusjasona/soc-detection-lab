@@ -5,6 +5,8 @@ evidence is Sysmon, cloud evidence is AWS CloudTrail.
 
 ![Intrusion overview: one operation across three laptops and the cloud](img/intrusion-overview.png)
 
+Colour marks the stage: grey = initial access, purple = compromised hosts, blue = endpoint actions on FYODOR-L, green = cloud, orange = impact.
+
 The same flow as a Mermaid source, in case GitHub renders it:
 
 ```mermaid
