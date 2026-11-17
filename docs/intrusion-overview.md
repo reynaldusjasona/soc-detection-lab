@@ -3,6 +3,10 @@
 How the three investigations fit into one operation against Frothly on 2018-08-20. Endpoint
 evidence is Sysmon, cloud evidence is AWS CloudTrail.
 
+![Intrusion overview: one operation across three laptops and the cloud](img/intrusion-overview.png)
+
+The same flow as a Mermaid source, in case GitHub renders it:
+
 ```mermaid
 flowchart TD
     A["Initial access, browser context<br/>2018-08-20 ~09:59 to 10:01"] --> B["PowerShell Empire implant<br/>encoded, hidden PowerShell"]
